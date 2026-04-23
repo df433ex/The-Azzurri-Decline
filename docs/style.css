@@ -1,0 +1,737 @@
+/* ======================================================================
+   How Inequality Killed the Azzurri? —
+   BEE2041 · Data Science in Economics · University of Exeter
+   ======================================================================*/
+
+:root {
+    --ink: #1e1e23;
+    --rule: #c2c2d6;
+    --bg: #ffffff;
+    --bg-alt: #f5f5f7;
+    --bg-blur: rgba(251, 251, 253, 0.72);
+    --panel: #ffffff;
+    --link: #359aff;
+    --link-hover: #0077ed;
+    --accent: #1d1d1f;
+
+
+
+
+
+    --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+        "Helvetica Neue", "Helvetica", "Arial", system-ui, sans-serif;
+    --mono: "SF Mono", "Menlo", "Consolas", monospace;
+
+    /* layout */
+    --max-width: 600px;
+    --wide: 980px;
+    --nav-h: 48px;
+    --radius: 18px;
+    --radius-sm: 12px;
+    --radius-lg: 28px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.47;
+    letter-spacing: -0.01em;
+    font-feature-settings: "kern", "liga";
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+section[id],
+header[id] {
+    scroll-margin-top: calc(var(--nav-h) + 20px);
+}
+
+/* =============================================================
+   SCROLL PROGRESS BAR
+   ============================================================= */
+.progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 1px;
+    width: 0%;
+    background: var(--accent);
+    z-index: 200;
+    transition: width 0.08s linear;
+}
+
+/* =============================================================
+   STICKY TOP NAV
+   ============================================================= */
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    height: var(--nav-h);
+    padding: 0 22px;
+    background: var(--bg-blur);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    font-size: 12px;
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    justify-content: center;
+}
+
+.topbar .brand {
+    font-weight: 600;
+    color: var(--link);
+    text-decoration: none;
+    white-space: nowrap;
+    margin-right: 14px;
+}
+
+.topbar .toc {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 26px;
+    align-items: center;
+}
+
+.topbar .toc a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    opacity: 0.88;
+    padding: 2px 0;
+    transition: opacity .2s, color .2s;
+}
+
+.topbar .toc a:hover {
+    color: var(--ink);
+    opacity: 1;
+}
+
+/* --- Figures dropdown --- */
+.fig-menu {
+    position: relative;
+    margin-left: 14px;
+}
+
+.fig-menu>summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 4px 10px;
+    border-radius: 980px;
+    background: rgba(0, 0, 0, 0.04);
+    color: var(--ink);
+    font-size: 12px;
+    font-weight: 500;
+    user-select: none;
+    transition: background .15s;
+}
+
+.fig-menu>summary::-webkit-details-marker {
+    display: none;
+}
+
+.fig-menu>summary:hover {
+    background: rgba(0, 0, 0, 0.08);
+}
+
+.fig-menu[open]>summary {
+    background: var(--ink);
+    color: #fff;
+}
+
+.fig-menu .chev {
+    display: inline-block;
+    margin-left: 2px;
+    transition: transform .2s;
+    font-size: 9px;
+}
+
+.fig-menu[open] .chev {
+    transform: rotate(180deg);
+}
+
+.fig-menu>ul {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    min-width: 260px;
+    margin: 0;
+    padding: 8px 0;
+    list-style: none;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: var(--radius-sm);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.14);
+    font-size: 13px;
+}
+
+.fig-menu>ul li {
+    margin: 0;
+}
+
+.fig-menu>ul a {
+    display: block;
+    padding: 9px 16px;
+    color: var(--ink);
+    text-decoration: none;
+    transition: background .1s;
+}
+
+.fig-menu>ul a:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+/* =============================================================
+   SECTIONS 
+   ============================================================= */
+.hero,
+main>section,
+.site-footer {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/*even sections light-grey, odd sections white */
+main>section:nth-of-type(even) {
+    background: var(--bg-alt);
+}
+
+/* constrain the inner text column, centred */
+.hero>*,
+main>section>*,
+.site-footer>* {
+    max-width: var(--max-width);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* figures and model grid can be wider */
+main>section>details.fig,
+main>section>.model-grid {
+    max-width: var(--wide);
+}
+
+/* =============================================================
+   HERO
+   ============================================================= */
+.hero {
+    padding-top: 120px;
+    padding-bottom: 120px;
+    text-align: center;
+    background: var(--bg);
+}
+
+.kicker {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--accent);
+    margin: 0 auto 18px auto;
+    max-width: none !important;
+    text-align: center;
+    text-transform: none;
+}
+
+h1 {
+    font-size: clamp(44px, 7vw, 80px);
+    line-height: 1.06;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    margin: 0 0 18px 0;
+    color: var(--ink);
+    max-width: 95% !important;
+}
+
+.subtitle {
+    font-size: clamp(19px, 2.1vw, 24px);
+    line-height: 1.33;
+    color: var(--ink-soft);
+    font-weight: 400;
+    max-width: 95% !important;
+    margin: 0 auto 28px;
+    font-style: normal;
+    letter-spacing: -0.015em;
+}
+
+.byline {
+    font-size: 14px;
+    color: var(--muted);
+    margin: 0;
+    letter-spacing: 0;
+}
+
+/* =============================================================
+   SECTION HEADINGS
+   ============================================================= */
+main>section {
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+
+h2 {
+    font-size: clamp(21px, 4.2vw, 38px);
+    line-height: 1.1;
+    letter-spacing: -0.022em;
+    font-weight: 700;
+    margin: 0 0 28px 0;
+    color: var(--ink);
+    text-align: center;
+    max-width: 90% !important;
+}
+
+h3 {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin: 2rem 0 0.6rem 0;
+}
+h4 {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin: 2rem 0 0.6rem 0;
+    text-align: center;
+    }
+
+p {
+    margin: 0 0 10px 0;
+    font-size: 19px;
+    /* Apple body copy is generous */
+    line-height: 1.52;
+    letter-spacing: -0.015em;
+    color: var(--ink-soft);
+    style: normal;
+    text-align: justify;
+    text-align-last: center;
+    max-width: 80% !important;
+}
+
+strong {
+    font-weight: 600;
+    color: var(--ink);
+}
+
+em {
+    font-style: italic;
+}
+
+a {
+    color: var(--link);
+    text-decoration: none;
+    transition: color .15s;
+}
+
+a:hover {
+    color: var(--link-hover);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+code {
+    font-family: var(--mono);
+    font-size: 0.9em;
+    background: rgba(0, 0, 0, 0.05);
+    padding: 2px 6px;
+    border-radius: 6px;
+    color: var(--ink);
+}
+
+.three-column {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 40px;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.column p {
+    max-width: 100% !important;
+    width: 100%;
+    margin: 0 0 10px 0;
+}
+
+.column:first-child p {
+    text-align: justify;
+    text-align-last: right;
+}
+
+.column:nth-child(2) p {
+    text-align: justify;
+    text-align-last: center;
+}
+
+
+.column:last-child p {
+    text-align: justify;
+    text-align-last: left;
+}
+
+.column h3 {
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+/* =============================================================
+   INTRODUCTION PARAGRAPHS
+   ============================================================= */
+.intro-lead {
+    max-width: 85%;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.intro-secondary {
+    opacity: 0.50;
+    max-width: 80%;
+}
+
+
+/* =============================================================
+   FIGURES 
+   ============================================================= */
+details.fig {
+    margin: 40px auto;
+    padding: 0;
+    background: var(--panel);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: box-shadow .25s ease;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+details.fig:hover {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.07);
+}
+
+details.fig>summary {
+    cursor: pointer;
+    padding: 22px 28px;
+    font-weight: 500;
+    font-size: 17px;
+    color: var(--ink);
+    letter-spacing: -0.015em;
+    list-style: none;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: background .15s;
+}
+
+details.fig>summary::-webkit-details-marker {
+    display: none;
+}
+
+details.fig>summary:hover {
+    background: rgba(0, 0, 0, 0.02);
+}
+
+details.fig>summary::after {
+    content: "›";
+    margin-left: auto;
+    color: var(--muted);
+    font-size: 22px;
+    line-height: 1;
+    transition: transform .2s;
+}
+
+details.fig[open]>summary::after {
+    transform: rotate(90deg);
+}
+
+.fig-label {
+    display: inline-block;
+    padding: 4px 11px;
+    border-radius: 980px;
+    background: var(--ink);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+details.fig>figure {
+    margin: 0;
+    padding: 0 28px 28px;
+}
+
+details.fig img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-sm);
+    background: var(--bg-alt);
+}
+
+details.fig figcaption {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.5;
+    margin-top: 18px;
+    padding-left: 0;
+    border-left: none;
+    text-align: center;
+    letter-spacing: -0.01em;
+}
+
+details.fig figcaption strong {
+    display: block;
+    color: var(--ink);
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+
+main>section:nth-of-type(even) details.fig {
+    background: #fff;
+}
+
+/* =============================================================
+   MODEL CARDS 
+   ============================================================= */
+.model-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px;
+    margin: 36px auto;
+}
+
+.model-card {
+    background: var(--panel);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    transition: transform .2s, box-shadow .2s;
+}
+
+.model-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.06);
+}
+
+.model-card h3 {
+    margin: 0 0 6px 0;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--link);
+    text-transform: uppercase;
+    font-weight: 600;
+    text-align: center !important;
+}
+
+.model-card .model-spec {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ink);
+    margin: 0 0 14px 0;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+main>section:nth-of-type(even) .model-card {
+    background: #fff;
+}
+
+/* =============================================================
+   CAVEATS
+   ============================================================= */
+ul.caveats {
+    padding-left: 0;
+    margin: 12px auto 20px auto;
+    max-width: 600px;
+    font-size: 17px;
+    color: var(--ink-soft);
+    text-align: center;
+    opacity: 0.5;
+}
+
+ul.caveats li {
+    margin-bottom: 12px;
+}
+
+/* =============================================================
+   FOOTER
+   ============================================================= */
+.site-footer {
+    padding-top: 40px;
+    padding-bottom: 48px;
+    background: var(--bg-alt);
+    color: var(--muted);
+    font-size: 12px;
+    text-align: center;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.site-footer p {
+    margin: 0 0 6px 0;
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.site-footer a {
+    color: var(--muted);
+}
+
+.site-footer a:hover {
+    color: var(--link);
+}
+
+/* =============================================================
+   FADE-IN ON SCROLL
+   ============================================================= */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity .7s cubic-bezier(0.22, 1, 0.36, 1),
+        transform .7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.fade-in.is-visible {
+    opacity: 1;
+    transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    .fade-in {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
+
+/* =============================================================
+   RESPONSIVE
+   ============================================================= */
+@media (max-width: 820px) {
+    .topbar {
+        gap: 14px;
+        padding: 0 14px;
+        overflow-x: auto;
+    }
+
+    .topbar .toc {
+        gap: 18px;
+    }
+
+    .topbar .toc a {
+        font-size: 11px;
+    }
+
+    details.fig>summary {
+        padding: 18px 20px;
+        font-size: 15px;
+    }
+
+    details.fig>figure {
+        padding: 0 20px 22px;
+    }
+
+    .model-card {
+        padding: 22px 18px;
+    }
+}
+
+@media (max-width: 540px) {
+    .hero {
+        padding-top: 80px;
+        padding-bottom: 80px;
+    }
+
+    main>section {
+        padding-top: 70px;
+        padding-bottom: 70px;
+    }
+
+    h1 {
+        font-size: 38px;
+    }
+
+    h2 {
+        font-size: 28px;
+    }
+
+    p {
+        font-size: 17px;
+    }
+
+    .topbar .toc {
+        display: none;
+    }
+
+    .topbar {
+        justify-content: space-between;
+    }
+}
+
+/* =============================================================
+   PRINT
+   ============================================================= */
+@media print {
+    body {
+        background: #eceee6;
+        font-size: 11pt;
+        color: #000;
+    }
+
+    .topbar,
+    .progress-bar,
+    .fig-menu {
+        display: none !important;
+    }
+
+    main>section:nth-of-type(even) {
+        background: #fff;
+    }
+
+    details.fig,
+    .model-card {
+        box-shadow: none;
+        border: 1px solid #ccc;
+        break-inside: avoid;
+    }
+
+    details.fig>summary::after {
+        display: none;
+    }
+
+    details.fig:not([open])>figure {
+        display: block;
+    }
+
+    a {
+        color: #000;
+        text-decoration: none;
+    }
+}

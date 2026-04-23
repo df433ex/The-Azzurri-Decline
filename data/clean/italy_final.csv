@@ -1,0 +1,12 @@
+year,tournament,result,performance_score,qualified,host,players,avg_value_m,total_value_m,top_value_m,avg_top11_value_m
+2006,World Cup,Winner,7,1,Germany,42.0,9.03,379.35,35.0,23.18
+2008,Euro,Quarter-final,4,1,Austria/Switzerland,45.0,9.37,421.6,30.0,21.14
+2010,World Cup,Group Stage,2,1,South Africa,47.0,10.23,480.65,36.0,22.5
+2012,Euro,Runner-up,6,1,Poland/Ukraine,39.0,12.07,470.9,38.0,22.36
+2014,World Cup,Group Stage,2,1,Brazil,47.0,10.8,507.8,34.0,21.14
+2016,Euro,Quarter-final,4,1,France,47.0,10.33,485.3,30.0,20.32
+2018,World Cup,Did Not Qualify,1,0,Russia,19.0,23.87,453.5,70.0,36.45
+2021,Euro,Winner,7,1,Various,49.0,25.08,1229.0,75.0,52.73
+2022,World Cup,Did Not Qualify,1,0,Qatar,22.0,30.23,665.0,60.0,47.27
+2024,Euro,Round of 16,3,1,Germany,49.0,20.7,1014.5,70.0,46.36
+2026,World Cup,Qualified,3,1,USA/Canada/Mexico,,,,,

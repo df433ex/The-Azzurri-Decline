@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Has Inequality Killed the Azzurri? </title>
+  <meta name="description"
+    content="A data-driven blog post investigating Italy's World Cup failures. Using data from various sources and web scraping." />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+
+  <!-- ==========================================================
+     1. SCROLL PROGRESS BAR (pure CSS + tiny JS at the bottom)
+     ========================================================== -->
+  <div class="progress-bar" id="progressBar" aria-hidden="true"></div>
+
+
+  <!-- ==========================================================
+     2. STICKY TOP NAV
+     ========================================================== -->
+  <nav class="topbar" aria-label="Site navigation">
+    <a class="brand" href="#top"> #ForzaAzzurri</a>
+    <ul class="toc">
+      <li><a href="#introduction">Intro</a></li>
+      <li><a href="#lens-one">Lens&nbsp;1</a></li>
+      <li><a href="#lens-two">Lens&nbsp;2</a></li>
+      <li><a href="#results">Results</a></li>
+      <li><a href="#models">Models</a></li>
+      <li><a href="#takeaways">Takeaways</a></li>
+    </ul>
+
+    <details class="fig-menu" id="figMenu">
+      <summary aria-label="Jump to a figure">Figures <span class="chev">▾</span></summary>
+      <ul>
+        <li><a href="#fig1">1 &middot; Gini Coefficients by league</a></li>
+        <li><a href="#fig2">2 &middot; Foreign-player percentage</a></li>
+        <li><a href="#fig3">3 &middot; Azzurri's results timeline</a></li>
+        <li><a href="#fig4">4 &middot; Azzurri's squad depth</a></li>
+        <li><a href="#fig5">5 &middot; League size and value</a></li>
+        <li><a href="#fig6">6 &middot; Azzurri's squad value</a></li>
+      </ul>
+    </details>
+  </nav>
+
+
+  <!-- ==========================================================
+     3. HEADER / HERO
+     ========================================================== -->
+  <header class="hero" id="top">
+    <p class="kicker">Diego Fasano &middot; BEE2041 &middot; University of Exeter, May 2026</p>
+    <h1>Has Inequality Killed the Azzurri?</h1>
+    <p class="subtitle">A data story of Serie A&rsquo;s international decline and why the numbers complicate the
+      narrative.
+    </p>
+  </header>
+
+
+  <main>
+
+    <!-- ==========================================================
+     4. INTRO SECTION
+     ========================================================== -->
+    <section id="introduction" class="fade-in">
+      <h2>Introduction </h2>
+
+      <p class="intro-lead">
+        The 4 time world champion Italy has not qualified for a world cup for the third time in a row, a truly
+        unobserved event in the history of football. A popular narrative portrays this failure as the inevitable
+        consequence of Serie A&rsquo;s &ldquo;inequality&rdquo; and &ldquo;flooding with foreigners&rdquo;. But what
+        does the data say? In this post, I build a dataset of club market values and tournament squads to investigate
+        these claims.
+      </p>
+
+      <p class="intro-secondary">
+        I analyse two main &ldquo;lenses&rdquo; on the problem: 1) the Gini coefficient of club market values within
+        each
+        league, and 2) the share of foreign players in each league. I then look at Italy&rsquo;s actual tournament
+        performance and squad composition, and run some simple regressions to see if the data supports the popular
+        narrative. The regressions run on a small data set, it is therefore important to interpret them as exploratory
+        and
+        descriptive rather than causal or predictive. With that said, the results do challenge the popular narrative in
+        some interesting ways, and suggest some alternative explanations for Italy&rsquo;s decline.
+      </p>
+    </section>
+
+
+    <!-- ==========================================================
+     5. LENS 1 · INEQUALITY (Gini)
+========================================== -->
+    <section id="lens-one" class="fade-in">
+      <h2>Lens 1 &middot; Is Serie A unusually unequal?</h2>
+
+      <p>
+        The Gini coefficient is a common measure of inequality, where 0 means perfect equality (all clubs have the same
+        market value) and 1 means perfect inequality (one club has all the market value). If Serie A is more
+        unequal than other leagues, it could mean that a few clubs dominate the league and hoard the best players,
+        leaving less talent for the national team. As public pressures impeded the selction of vast amounts of players
+        from the same squad. But how does Serie A compare to other European leagues, and how has
+        its Gini coefficient evolved over time?
+
+      </p>
+
+      <!-- ------- FIGURE 1 (collapsible) ------- -->
+      <details id="fig1" class="fig" open>
+        <summary>
+          <span class="fig-label">Figure&nbsp;1</span>
+          Gini coefficient of club market values by league and season (2006–2025)
+        </summary>
+        <figure>
+          <img src="figures/fig1_gini_leagues.png"
+            alt="Line chart of club-market-value Gini coefficient per season, 2006-2025, for ten European leagues." />
+        </figure>
+      </details>
+
+      <p>
+        Italy sits in the lower end of the pack in terms of Gini, and has only slightly become less equal since 2006. It
+        has an inital Gini of ~0.39, similar to Portugal, but has a much lower final Gini than Portugal, the second
+        lowest in the pack. Clearly, the narrative: Italian football has become more unequal and that is why the
+        national team is doing worse, is not supported by the Gini data. In fact, Italy has been one of the most equal
+        leagues in Europe for the past two decades. The scatter plot in Figure&nbsp;5 also shows that there is no clear
+        relationship between league size, total market value, and Gini coefficient. Italy has a moderate total market
+        value, but its Gini is among the lowest. This suggests that other factors besides inequality may be driving
+        Italy&rsquo;s decline on the international stage.
+      </p>
+
+      <!-- ------- FIGURE 5 ------- -->
+      <details id="fig5" class="fig">
+        <summary>
+          <span class="fig-label">Figure&nbsp;5</span>
+          League size &times; total market value (2025&ndash;26)
+        </summary>
+        <figure>
+          <img src="figures/fig5_scatter_gini_value.png"
+            alt="Scatter plot of number of clubs vs total league market value, points coloured by Gini coefficient." />
+        </figure>
+      </details>
+
+      <p>
+        This provides a better idea of the landscape of Gini Coefficients across European leagues, and shows that Italy
+        is, an outlier in terms of inequality, but not in the direction which would satisfy the narrative. Plotting the
+        Gini coeffiencients agaisnt total league market value does however show a negative reletionship between the two,
+        which could suggest that more unequal leagues are also less valuable overall, but this is a very tentative
+        observation and would require more analysis to confirm.
+      </p>
+    </section>
+
+
+    <!-- ==========================================================
+     6. LENS 2 · FOREIGN-PLAYER SHARE
+     ========================================================== -->
+    <section id="lens-two" class="fade-in">
+      <h2>Lens 2 &middot; Is Serie A &ldquo;flooded&rdquo; with foreigners?</h2>
+
+      <p>
+        Another common claim is that Serie A has too many foreign players, which supposedly harms the development of
+        Italian talent and weakens the national team. To evaluate this claim, we can look at the share of foreign
+        players in each league over time. If Serie A has a higher or faster-growing foreign-player share than other
+        leagues, it could lend some support to the narrative. But what does the data show?
+      </p>
+
+      <!-- ------- FIGURE 2 ------- -->
+      <details id="fig2" class="fig" open>
+        <summary>
+          <span class="fig-label">Figure&nbsp;2</span>
+          Foreign-player percentage (by league and season, 2006–2025)
+        </summary>
+        <figure>
+          <img src="figures/fig2_foreign_pct.png"
+            alt="Line chart of the percentage of foreign players per league and season, 2006-2025." />
+        </figure>
+      </details>
+
+      <p>
+        This set of data actually works with this narrative, Italy starts with the 3rd lowest percentage of foreign
+        players (26.9%) in 2006, but then has the fastest growth in foreign share (+41.7pp vs an average of +17.8pp),
+        ending up with the 3rd highest percentage in
+        2025 (68.5). This could suggest that Serie A has indeed become more &ldquo;flooded&rdquo; with foreigners, and
+        that
+        this may have contributed to Italy&rsquo;s decline. However, it is important to note that correlation does not
+        imply causation, and there could be other factors at play. For example, the increase in foreign players could be
+        a symptom rather than a cause of Italy&rsquo;s decline, or it could be driven by broader trends in football such
+        as globalization and commercialization. Therefore, while the foreign-player share data is consistent with the
+        narrative, it does not prove it.
+
+      </p>
+    </section>
+
+
+    <!-- ==========================================================
+     7. RESULTS · ITALY'S TOURNAMENT HISTORY + SQUADS
+     ========================================================== -->
+    <section id="results" class="fade-in">
+      <h2>The Azzurri's Perfomance</h2>
+
+      <p>
+        Now that we have some context on the league-level trends, we can zoom in on Italy&rsquo;s actual performance in
+        international tournaments, and the composition of their squads. This will help us see if there are any patterns
+        or insights that can be gleaned from Italy&rsquo;s results and squad values, and how they relate to the broader
+        narratives about inequality and foreign players. I assign each tournament result a simple performance score from
+        1 to 7, where 1 is 'not qualified', 2 is 'group stage exit', 3 is 'round of 16 exit' and so on. This allows us
+        to quantify Italy's performance over time and see if there are any trends or correlations with the league-level
+        data we discussed earlier.
+      </p>
+
+      <!-- ------- FIGURE 3 ------- -->
+      <details id="fig3" class="fig">
+        <summary>
+          <span class="fig-label">Figure&nbsp;3</span>
+          Italy at the World Cup and Euros, 1980&ndash;2024
+        </summary>
+        <figure>
+          <img src="figures/fig3_italy_results.png"
+            alt="Timeline bar chart of Italy's World Cup and Euro results from 1980 to 2024." />
+          <figcaption>
+            <strong>Figure&nbsp;3.</strong>
+            <span> Note: 2020 Euros played in 2021 because of covid restrictions.</span>
+          </figcaption>
+        </figure>
+      </details>
+
+      <!-- ------- FIGURE 6 ------- -->
+      <details id="fig6" class="fig">
+        <summary>
+          <span class="fig-label">Figure&nbsp;6</span>
+          Italy&rsquo;s squad total market value at each tournament
+        </summary>
+        <figure>
+          <img src="figures/fig6_italy_squad_value.png"
+            alt="Bar chart of Italy's squad total market value at each tournament, 2006-2024." />
+          <figcaption>
+        </figure>
+      </details>
+
+      <!-- ------- FIGURE 4 ------- -->
+      <details id="fig4" class="fig">
+        <summary>
+          <span class="fig-label">Figure&nbsp;4</span>
+          Player market values within each Italy squad
+        </summary>
+        <figure>
+          <img src="figures/fig4_squad_depth.png"
+            alt="Strip plot of individual player market values by tournament, coloured by outcome." />
+        </figure>
+      </details>
+
+      <p>
+        Italy&rsquo;s tournament performance has been on a general decline since the mid-2000s, with the 'peak' being
+        the
+        failure to qualify for three consecutive tournaments. Amid all of this it managed to win the 2021 Euros, how
+        this happened is truly unexplained... or is it?
+
+        Italy's squad market seems to have increased in value over time, however this is likely due to the general
+        inflation of player market values in recent years, rather than an actual increase in the quality of players.
+        However it is interesting to note that the 2021 Euro-winning squad had by far the highest swuad value of any
+        tournament. This could suggest that multiple players peaked in performance at the same time, which could have
+        contributed to the unexpected success.
+      </p>
+
+      <p>
+        The reality check? Is it possible that player values increase when they win a majour international tournament,
+        rather than the other way around? This would suggest that the high squad value in 2021 was a consequence of
+        winning the Euros, rather than a cause.
+      </p>
+
+      <p>
+        Furthermore Figure 4 does a great job at showing the distribution of player values within each squad, and how
+        this relates to performance. It not surprising therefore that the 2021 squad has one of the largest variances,
+        with a few very valuable players affecting the value.
+      </p>
+
+
+    </section>
+
+
+    <!-- ==========================================================
+     8. MODELS · REGRESSIONS
+     ========================================================== -->
+    <section id="models" class="fade-in">
+      <h2>What do the regressions say?</h2>
+
+      <p>
+        The final step I took involves running regressions, however, as explained before, the sample size is small, too
+        small to even start talking about a causal effect. The point is to ask weather the structural story even leaves
+        a trace. I run regressions of tournament performance against three variables:
+      <div class="three-column">
+        <div class="column">
+          <h3>Model 1: Serie A Foreign %</h3>
+          <p>If the narrative that more foreign players results in a weaker Azzurri side is right, the coefficient
+            should be negative, indicating a higher percentage of foreign players in domestic sides does in fact result
+            in a worse national team as little space is left for Italian players to grow and be noticed locally. </p>
+        </div>
+        <div class="column">
+          <h3>Value of Azzurri squads</h3>
+          <p>
+            This regression tries to understand if a valueable team truly results in a better international performance.
+            Players are however often heavily valued based on the club and league they are in and not just on ability
+            level.
+            The coefficient should be positive, indicating a positive performace return to higher valued players.
+          </p>
+        </div>
+        <div class="column">
+          <h4>Relative Openness to foreigners
+          </h4>
+          <p>The Azzurri's perfomance has steadily declined, but is focusing on one team the right thing to do? Have
+            other international teams had the same increase in international players without experiencing a fall in
+            perofrmance? This regression looks into the gap in foreign players between the nations.</p>
+        </div>
+      </div>
+
+
+
+      <div class="model-grid">
+
+        <article class="model-card">
+          <h3>Model&nbsp;1</h3>
+          <p class="placeholder"> &middot; &beta;&nbsp;=&nbsp;-0.0082, <em>p</em>&nbsp;=&nbsp;0.84</p>
+        </article>
+
+        <article class="model-card">
+          <h3>Model&nbsp;2</h3>
+          <p class="placeholder">&middot; &beta;&nbsp;=&nbsp;0.0032, <em>p</em>&nbsp;=&nbsp;0.19</p>
+        </article>
+
+        <article class="model-card">
+          <h3>Model&nbsp;3</h3>
+          <p class="placeholder">&middot; &beta;&nbsp;=&nbsp;0.0037, <em>p</em>&nbsp;=&nbsp;0.954</p>
+        </article>
+
+      </div>
+
+
+
+      <p>
+        Model 2 is the only slightly instructive one. Squad value has a largest, but still non-significcant positive
+        sign of the 3 models. This is mildly reassuring:<i> better squads do better</i>, is a sanity check that the
+        pipeline passes, however the explicitly structural variables do not. Model 1 and 3 have a p-value of over 0.8,
+        extremely far away from the desired 0.05, this is the result of a <strong>very small</strong> sample size among
+        larger problems like reverse causality, bias and even the fact the performance score is ordinal.
+      </p>
+    </section>
+
+
+    <!-- ==========================================================
+     9. TAKEAWAYS / CAVEATS
+     ========================================================== -->
+    <section id="takeaways" class="fade-in">
+      <h2>What the data actually supports</h2>
+      <p>
+        The only honest read is that, in the 2006-2024 window, we can see, <strong> neither Seria A's level of wealth
+          concentration nor its foreign share predict the disastrous tournament outcomes in a statistically meaningful
+          way.</strong> The ongoing international failures happen <i>against</i> a backdrop of decreasing domestic
+        percentages, but so does the 2021 Euro win. The Gini Coefficient for the Serie A did peak in 2018 but has since
+        retreated, and is overall among the lowest in the top 10 leagues.
+      </p>
+      <p>
+        Unfortunately no matter how the narratives are spun there is no evidence that Italy would have qualified, the
+        failed qualifier squads are not conspicuously shallow, maybe it was <i>bad luck</i>.
+      </p>
+      <p>
+        This is a useful finding. A lot of recent football commentary assumes a mechanism so obvious that it doesn't
+        seem to need testing. However when you do the test, you find that the variables pointed at, the ones first
+        blamed, are, empirically, weak predictors. Clearly soomething else: coach selection, youth development, playoff
+        variance and location or even the starting defenders not receiving a red card in the 41st minute of the first
+        half- is doing the work.
+      </p>
+
+      <h3>The <i>many</i> Caveats</h3>
+      <ul class="caveats">
+        <li>
+          Performance score is ordinal. A round–of–16 is not “twice” a group–stage exit in any real sense. Ordered logit
+          is the
+          textbook answer; with nine observations it would be over–parameterised. OLS + HC1 is the honest minimum.
+        </li>
+        <li>
+          Transfermarkt values are estimates. They are produced by a community of users and moderators, and they lag
+          real transfer
+          prices. For cross–league comparisons on the same platform‑date they are fine; as economic literature they
+          should be
+          treated with care.
+        </li>
+        <li>
+          N = 9. Nine tournaments is not enough to detect small effects. What this exercise rules out is a large effect
+          — the kind
+          the popular narrative implicitly invokes.
+        </li>
+        <li>
+          We look at players and values only, not club affiliation. A richer version of this project would track whether
+          Italian
+          internationals play in Serie A or abroad. This data is unfortunately not available to scrape, as the only
+          reliable website which has it is heavily armed against it.
+        </li>
+        <li>
+          Other smaller caveats are explained better in the .cvs files, a link to a folder can be found towards the end
+          of the page.
+        </li>
+      </ul>
+    </section>
+
+
+    <!-- ==========================================================
+    10. REPRODUCIBILITY
+     ========================================================== -->
+    <section id="reproduce" class="fade-in">
+      <h2>Reproduce this</h2>
+      <p>
+        All data, notebooks, and figures are in the
+        <a href="https://github.com/">GitHub repository</a>
+        <!-- TODO: paste the actual repo URL into the href above -->.
+        Run the four notebooks in order:
+        <code>01_scraping &rarr; 02_cleaning &rarr; 03_eda &rarr; 04_modelling</code>.
+      </p>
+    </section>
+
+  </main>
+
+
+  <!-- ==========================================================
+    11. FOOTER
+     ========================================================== -->
+  <footer class="site-footer">
+    <p>
+      Diego Fasano &middot; BEE2041 Data Science in Economics &middot; University of Exeter, 2025&#8209;26.
+    </p>
+    <p>
+      Data: <a href="https://www.transfermarkt.co.uk/" rel="noopener">Transfermarkt</a>,
+      Wikipedia match records, FIFA/UEFA tournament archives.
+    </p>
+  </footer>
+
+
+  <!-- ==========================================================
+    12. JAVASCRIPT FOR UPDATES
+    ========================================================== -->
+  <script>
+    // --- scroll progress bar ---
+    const bar = document.getElementById('progressBar');
+    function updateBar() {
+      const h = document.documentElement;
+      const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+      bar.style.width = pct + '%';
+    }
+    document.addEventListener('scroll', updateBar, { passive: true });
+    updateBar();
+
+    // --- auto-open a collapsed figure when linked to ---
+    function openTarget(hash) {
+      if (!hash) return;
+      const el = document.querySelector(hash);
+      if (el && el.tagName === 'DETAILS') el.open = true;
+    }
+    document.querySelectorAll('a[href^="#fig"]').forEach(a => {
+      a.addEventListener('click', () => openTarget(a.getAttribute('href')));
+    });
+    if (location.hash.startsWith('#fig')) openTarget(location.hash);
+
+    // --- close the Figures dropdown after clicking an item ---
+    const figMenu = document.getElementById('figMenu');
+    figMenu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => { figMenu.open = false; });
+    });
+
+    // --- fade-in on scroll ---
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-visible'); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,25 @@
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:      performance_score   R-squared:                       0.000
+Model:                            OLS   Adj. R-squared:                 -0.125
+Method:                 Least Squares   F-statistic:                  0.003370
+Date:                Wed, 22 Apr 2026   Prob (F-statistic):              0.955
+Time:                        19:26:38   Log-Likelihood:                -20.607
+No. Observations:                  10   AIC:                             45.21
+Df Residuals:                       8   BIC:                             45.82
+Df Model:                           1                                         
+Covariance Type:                  HC1                                         
+===============================================================================
+                  coef    std err          z      P>|z|      [0.025      0.975]
+-------------------------------------------------------------------------------
+Intercept       3.2932      0.660      4.986      0.000       1.999       4.588
+foreign_gap     0.0037      0.063      0.058      0.954      -0.121       0.128
+==============================================================================
+Omnibus:                        1.166   Durbin-Watson:                   3.450
+Prob(Omnibus):                  0.558   Jarque-Bera (JB):                0.822
+Skew:                           0.612   Prob(JB):                        0.663
+Kurtosis:                       2.309   Cond. No.                         7.01
+==============================================================================
+
+Notes:
+[1] Standard Errors are heteroscedasticity robust (HC1)

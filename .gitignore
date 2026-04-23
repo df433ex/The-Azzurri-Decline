@@ -1,0 +1,35 @@
+# Python virtual environment — never commit this, it's huge and machine-specific
+venv/
+env/
+.env/
+
+# Python cache files — auto-generated, not needed in the repo
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Jupyter notebook checkpoints — auto-saved drafts, not the real files
+.ipynb_checkpoints/
+
+# OS junk files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE config — personal settings, not project files
+.vscode/
+.idea/
+*.swp
+
+# Environment variable files — could contain API keys, never commit these
+.env
+*.env
+
+# Large data files — if any of your CSVs exceed GitHub's 100MB limit, add them here
+# data/raw/squad_values.csv
+
+# Pip tools
+pip-log.txt
+pip-delete-this-directory.txt
