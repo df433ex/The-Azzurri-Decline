@@ -1,4 +1,4 @@
-# How Inequality Killed the Azzurri?
+# Has Inequality Killed the Azzurri?
 ### A Data Story of Serie A's Decline
 
 *Diego Fasano, BEE2041 — University of Exeter, 2025/26*
