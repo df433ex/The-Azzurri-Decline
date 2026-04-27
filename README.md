@@ -7,7 +7,7 @@
 
 ## Read the blog here:
 
-**[https://diegofasano.com/The_Azzurri_Decline]**
+**[https://df433ex.github.io/The_Azzurri_Decline/]**
 
 ---
 
