@@ -11,7 +11,7 @@
 
 ## Or here (personal website)
 
-**[https://diegofasano.com/The-Azzurri-Decline/]**
+**[https://diegofasano.com/projects/The-Azzurri-Decline/]**
 ---
 
 ## The question
