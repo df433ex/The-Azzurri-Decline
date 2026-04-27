@@ -5,10 +5,13 @@
 
 ---
 
-## Read the blog here:
+## Read the blog here (run from this repo):
 
-**[https://df433ex.github.io/The_Azzurri_Decline/]**
+**[https://df433ex.github.io/The-Azzurri-Decline/]**
 
+## Or here (personal website)
+
+**[https://diegofasano.com/The-Azzurri-Decline/]**
 ---
 
 ## The question
