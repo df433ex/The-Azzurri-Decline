@@ -441,12 +441,18 @@
     12. JAVASCRIPT FOR UPDATES
     ========================================================== -->
   <script>
-    // --- scroll progress bar ---
+    // --- scroll progress bar + hero fade-out ---
     const bar = document.getElementById('progressBar');
+    const heroImage = document.getElementById('heroImage');
     function updateBar() {
       const h = document.documentElement;
       const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
       bar.style.width = pct + '%';
+      if (heroImage) {
+        const fadeDistance = window.innerHeight * 0.7;
+        const opacity = Math.max(0, 1 - h.scrollTop / fadeDistance);
+        heroImage.style.opacity = opacity;
+      }
     }
     document.addEventListener('scroll', updateBar, { passive: true });
     updateBar();
