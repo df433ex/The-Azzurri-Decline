@@ -210,6 +210,18 @@ main>section,
     padding-left: 15px;
     padding-right: 15px;
 }
+.hero-image {
+    display: block;
+    width: 100%;
+    max-width: var(--wide) !important;
+    height: auto;
+    max-height: 440px;
+    object-fit: cover;
+    margin: 0 auto 36px auto;
+    border-radius: 6px;
+    will-change: opacity;
+    transition: opacity 0.06s linear;
+}
 
 /*even sections light-grey, odd sections white */
 main>section:nth-of-type(even) {
